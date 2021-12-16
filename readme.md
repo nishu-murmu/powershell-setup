@@ -2,9 +2,12 @@
 
 <img src="https://github.com/nishu-murmu/powershell-setup/blob/main/images/terminal_two.png" width="100%">
 
-#### This is the one currently using
+### This is the one currently using
+
 <img src="https://github.com/nishu-murmu/powershell-setup/blob/main/images/terminal_three.png">
+
 #### Most of my work and navigation through my PC happens in terminal so I need to set it up to look clean and nicer for my workflow.
+
 #### Setting it up with all the colors and glyphs, fonts and more.
 
 ## Installation Guide
