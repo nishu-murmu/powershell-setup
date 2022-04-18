@@ -15,12 +15,12 @@
 ### To add icons in your terminal
 1. First of all you need to install a [Nerd Fonts](https://www.nerdfonts.com/font-downloads) (Hack Nerd Fonts preferable).
 2. Change your Terminal Fonts to specific Nerd Font you just install.
-3. Add this line in your $PROFILE file `Import-Module -Name Terminal-Icons`.
-4. Now paste `. $PROFILE` in your terminal and enter to see the effect.
+3. Install [terminal-icons](powershellgallery.com/packages/Terminal-Icons/0.9.0) from powershell gallery.
+4. Add this line in your $PROFILE file `Import-Module -Name Terminal-Icons`.
+5. Now paste `. $PROFILE` in your terminal and enter to see the effect.
 
 ### To update your terminal
-1. Download any one package from the three [Scoop](https://scoop.sh/), [Chocolatey](https://chocolatey.org/install#generic), [winget](https://docs.microsoft.com/en-us/windows/package-manager/winget/).
-2. After downloading a package install a custom prompt engine for powershell [oh-my-posh](https://www.powershellgallery.com/packages/oh-my-posh/7.64.2).
-3. Now you're ready to change your terminal by adding this line in your $PROFILE file`Import-Module oh-my-posh`
-4. Now add any one of the theme in oh-my-posh folder by adding this line in your $PROFILE file `oh-my-posh --init --shell pwsh --config ~/jandedobbeleer.omp.json | Invoke-Expression`.
-5. Now paste `. $PROFILE` in your terminal and enter to see the effect.
+1. After downloading a package install a custom prompt engine for powershell [oh-my-posh](https://www.powershellgallery.com/packages/oh-my-posh/7.64.2).
+2. Now you're ready to change your terminal by adding this line in your $PROFILE file`Import-Module oh-my-posh`
+3. Now add any one of the theme in oh-my-posh folder by adding this line in your $PROFILE file `oh-my-posh --init --shell pwsh --config ~/jandedobbeleer.omp.json | Invoke-Expression`.
+4. Now paste `. $PROFILE` in your terminal and enter to see the effect.
