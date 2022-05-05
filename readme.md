@@ -20,7 +20,12 @@
 5. Now paste `. $PROFILE` in your terminal and enter to see the effect.
 
 ### To update your terminal
-1. After downloading a package install a custom prompt engine for powershell [oh-my-posh](https://www.powershellgallery.com/packages/oh-my-posh/7.64.2).
-2. Now you're ready to change your terminal by adding this line in your $PROFILE file`Import-Module oh-my-posh`
-3. Now add any one of the theme in oh-my-posh folder by adding this line in your $PROFILE file `oh-my-posh --init --shell pwsh --config ~/jandedobbeleer.omp.json | Invoke-Expression`.
-4. Now paste `. $PROFILE` in your terminal and enter to see the effect.
+1. After downloading a package install a custom prompt engine for powershell using winget [oh-my-posh](https://ohmyposh.dev/docs/installation/windows).
+    ```
+    winget install oh-my-posh
+    ```
+2. Now add any one of the theme in oh-my-posh folder by adding this line in your $PROFILE file.
+    ```
+    oh-my-posh --init --shell pwsh --config ~/jandedobbeleer.omp.json | Invoke-Expression
+    ```
+3. Now run the `$PROFILE` in command prompt.
