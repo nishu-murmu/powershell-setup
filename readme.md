@@ -29,3 +29,10 @@
     oh-my-posh --init --shell pwsh --config ~/jandedobbeleer.omp.json | Invoke-Expression
     ```
 3. Now run the `$PROFILE` in command prompt.
+
+### To change default themes
+1. Enter this is powershell terminal
+```
+New-Item -Path "$home\Documents\WindowsPowerShell\Modules\oh-my-posh" -Name "themes" -ItemType Directory; Set-Location -Path "$home\Documents\WindowsPowerShell\Modules\oh-my-posh\themes"; Invoke-WebRequest -UseBasicParsing -Uri https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/contents/themes | Select-Object -ExpandProperty Content | ConvertFrom-Json | ForEach-Object {$_ | Select-Object -ExpandProperty name | Select-String -Pattern ".*.omp.json"} | ForEach-Object {$_.toString().Replace(".omp.json", "")} | ForEach-Object {Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/$_.omp.json" -UseBasicParsing -OutFile "$_.omp.json"}
+```
+2. Go to location `C:\Users\<User>\Documents\WindowsPowerShell\Modules\oh-my-posh` and copy the theme you want to use and paste in the `$PROFILE` file.
