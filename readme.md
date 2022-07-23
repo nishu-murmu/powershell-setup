@@ -22,17 +22,14 @@
 ### To update your terminal
 1. After downloading a package install a custom prompt engine for powershell using winget [oh-my-posh](https://ohmyposh.dev/docs/installation/windows).
     ```
-    winget install oh-my-posh
+   winget install JanDeDobbeleer.OhMyPosh -s winget
     ```
-2. Now add any one of the theme in oh-my-posh folder by adding this line in your $PROFILE file.
+2. Then add this inside the terminal
     ```
-    oh-my-posh --init --shell pwsh --config ~/jandedobbeleer.omp.json | Invoke-Expression
+    Get-PoshThemes
     ```
-3. Now run the `$PROFILE` in command prompt.
-
-### To change default themes
-1. Enter this is powershell terminal
-```
-New-Item -Path "$home\Documents\WindowsPowerShell\Modules\oh-my-posh" -Name "themes" -ItemType Directory; Set-Location -Path "$home\Documents\WindowsPowerShell\Modules\oh-my-posh\themes"; Invoke-WebRequest -UseBasicParsing -Uri https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/contents/themes | Select-Object -ExpandProperty Content | ConvertFrom-Json | ForEach-Object {$_ | Select-Object -ExpandProperty name | Select-String -Pattern ".*.omp.json"} | ForEach-Object {$_.toString().Replace(".omp.json", "")} | ForEach-Object {Invoke-WebRequest -Uri "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/$_.omp.json" -UseBasicParsing -OutFile "$_.omp.json"}
-```
-2. Go to location `C:\Users\<User>\Documents\WindowsPowerShell\Modules\oh-my-posh` and copy the theme you want to use and paste in the `$PROFILE` file.
+3. Then add this lines inside the `$PROFILE` file.
+    ```
+    oh-my-posh init pwsh --config C:\Users\username\AppData\Local\Programs\oh-my-posh\themes/jandedobbeleer.omp.json | Invoke-Expression
+    ```
+4. To change the themes you can change the **themeName** inside  `C:\Users\_username_\AppData\Local\Programs\oh-my-posh\themes/themeName.omp.json` lines in `$PROFILE` file.
