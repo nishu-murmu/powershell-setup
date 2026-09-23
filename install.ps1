@@ -569,7 +569,7 @@ if ($psuOmp) {
         if ([Console]::OutputEncoding.WebName -ne 'utf-8') { [Console]::OutputEncoding = [System.Text.Encoding]::UTF8 }
         $psuThemes = $env:POSH_THEMES_PATH
         if (-not $psuThemes) { $psuThemes = Join-Path $env:LOCALAPPDATA 'Programs\oh-my-posh\themes' }
-        $psuConfig = Join-Path $psuThemes 'wopian.omp.json'
+        $psuConfig = Join-Path $psuThemes 'robbyrussell.omp.json'
         if (Test-Path -LiteralPath $psuConfig) {
             oh-my-posh init pwsh --config $psuConfig | Invoke-Expression
         } else {
@@ -692,7 +692,7 @@ function which ($command) {
         Write-Host '======================================================' -ForegroundColor Magenta
         Write-Host ' Next:' -ForegroundColor Cyan
         Write-Host '   1. Restart Windows Terminal - a new tab picks up the font and the profile.'
-        Write-Host '   2. Change the theme by editing the wopian.omp.json file name inside the'
+        Write-Host '   2. Change the theme by editing the robbyrussell.omp.json file name inside the'
         Write-Host '      managed block of your $PROFILE (Get-PoshThemes lists them all).'
         Write-Host ''
     }

@@ -106,10 +106,10 @@ Pick a theme, they are all listed by:
 Get-PoshThemes
 ```
 
-Then point the managed block in your `$PROFILE` at it (default here is `wopian`):
+Then point the managed block in your `$PROFILE` at it (default here is `robbyrussell`):
 
 ```powershell
-oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\wopian.omp.json" | Invoke-Expression
+oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\robbyrussell.omp.json" | Invoke-Expression
 ```
 
 The block lives between these markers in `$PROFILE`, so re-running `install.ps1`
