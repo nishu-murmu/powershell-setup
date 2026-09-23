@@ -14,7 +14,7 @@ if ($psuOmp) {
         if ([Console]::OutputEncoding.WebName -ne 'utf-8') { [Console]::OutputEncoding = [System.Text.Encoding]::UTF8 }
         $psuThemes = $env:POSH_THEMES_PATH
         if (-not $psuThemes) { $psuThemes = Join-Path $env:LOCALAPPDATA 'Programs\oh-my-posh\themes' }
-        $psuConfig = Join-Path $psuThemes 'wopian.omp.json'
+        $psuConfig = Join-Path $psuThemes 'robbyrussell.omp.json'
         if (Test-Path -LiteralPath $psuConfig) {
             oh-my-posh init pwsh --config $psuConfig | Invoke-Expression
         } else {
