@@ -18,109 +18,75 @@ Open a PowerShell terminal and run:
 irm https://raw.githubusercontent.com/nishu-murmu/powershell-setup/main/install.ps1 | iex
 ```
 
-`irm` (Invoke-RestMethod) downloads the script from the official source of this
-repository and `iex` (Invoke-Expression) runs it. That is the same download-and-run
-pattern used by scoop and oh-my-posh themselves.
+`irm` (Invoke-RestMethod) downloads the script and `iex` (Invoke-Expression) runs it.
 
-What the command does, in order:
+What the command does:
 
-| Step | What gets installed | Tool |
+1. **Theme Selection**: Prompts for your desired Oh My Posh theme (defaults to `robbyrussell`) and downloads the theme file to `$env:LOCALAPPDATA\Programs\oh-my-posh\themes\<theme>.omp.json`.
+2. **Tools & Applications**: Installs Git, Oh My Posh, fzf, ripgrep, Neovim, PowerShell 7, and Windows Terminal via `winget` (skipping any that are already installed).
+3. **Nerd Font**: Installs Hack Nerd Font (via `oh-my-posh font install Hack`) if not already present.
+4. **PowerShell Modules**: Installs `posh-git`, `Terminal-Icons`, `PSFzf`, and `PSReadLine`.
+5. **Windows Terminal Font**: Sets the default font face to `Hack Nerd Font` in Windows Terminal settings.
+6. **PowerShell Profile**: Configures your `$PROFILE` with prompt initialization, icons, git status, history prediction, and reliable aliases/utilities (`ll`, `g`, `vim`, `grep`, `tig`, `less`, `which`).
+
+| Step | Component | Tool / Source |
 | --- | --- | --- |
-| 1 | winget (App Installer), bootstrapped from Microsoft when missing | aka.ms/getwinget |
-| 2 | scoop | get.scoop.sh |
-| 3 | Git, fzf, ripgrep | winget + scoop |
-| 4 | Oh My Posh, PowerShell 7, Neovim, Windows Terminal | winget |
-| 5 | Hack Nerd Font (all weights, installed for your user) | nerd-fonts release |
-| 6 | posh-git, Terminal-Icons, PSFzf, PSReadLine | PowerShell Gallery |
-| 7 | `$PROFILE` for **both** Windows PowerShell 5.1 and PowerShell 7 | generated block |
-| 8 | Windows Terminal default font | only set if you never chose one |
+| 1 | Oh My Posh theme (`.omp.json`) | GitHub / JanDeDobbeleer |
+| 2 | Git, Oh My Posh, fzf, ripgrep, Neovim, pwsh, wt | `winget` |
+| 3 | Hack Nerd Font | `oh-my-posh font install` |
+| 4 | posh-git, Terminal-Icons, PSFzf, PSReadLine | PowerShell Gallery |
+| 5 | `$PROFILE` configuration | Managed block in `$PROFILE` |
+| 6 | Windows Terminal default font | Terminal `settings.json` |
 
 Notes:
 
-* Every step is idempotent - it only installs what is missing, so you can re-run the
-  command any time to repair the setup.
-* No administrator rights are required. winget may still show a UAC prompt for
-  machine-wide packages such as Git.
-* Packages that are already installed are detected and skipped.
-* Your `$PROFILE` is backed up (`.bak-<timestamp>`) before it is changed, and only
-  the managed block between the markers is touched - everything you wrote outside of
-  it stays exactly as it was.
+* Every step is idempotent — it checks what is already installed and skips it.
+* Your `$PROFILE` is safely managed inside marked blocks (`# >>> powershell-setup:managed-block >>>`), preserving any custom commands you add outside.
 
-### Development branch
+## Manual Installation
 
-The development branch may contain experimental changes and should only be used for
-testing on non-production systems:
+Prefer to do it step by step?
 
-```powershell
-irm https://raw.githubusercontent.com/nishu-murmu/powershell-setup/dev/install.ps1 | iex
-```
-
-## Manual installation
-
-Prefer to know what happens? Do it step by step.
-
-### 1. Package managers
-
-```powershell
-# winget comes with Windows (App Installer). If it is missing:
-Invoke-WebRequest -Uri https://aka.ms/getwinget -OutFile getwinget.msixbundle
-Add-AppxPackage .\getwinget.msixbundle
-
-# scoop
-Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force
-irm https://get.scoop.sh | iex
-```
-
-### 2. Tools
+### 1. Applications
 
 ```powershell
 winget install Git.Git --source winget
 winget install JanDeDobbeleer.OhMyPosh --source winget
-scoop install fzf ripgrep
+winget install junegunn.fzf --source winget
+winget install BurntSushi.ripgrep.MSVC --source winget
+winget install Neovim.Neovim --source winget
 ```
 
-### 3. Nerd Font (Hack)
+### 2. Nerd Font (Hack)
 
-Install a [Nerd Font](https://www.nerdfonts.com/font-downloads) so the prompt icons
-render - Hack Nerd Font is the one used here. The script installs it per user, or
-you can run `oh-my-posh font install Hack` after installing Oh My Posh.
+```powershell
+oh-my-posh font install Hack
+```
 
-Then set the terminal font (the script does this for you when no font is set):
-
+Then in Windows Terminal `settings.json`:
 ```json
 "profiles": { "defaults": { "font": { "face": "Hack Nerd Font" } } }
 ```
 
-### 4. PowerShell modules
+### 3. PowerShell Modules
 
 ```powershell
-Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
-Install-Module posh-git, Terminal-Icons, PSFzf -Scope CurrentUser -Force -AllowClobber
+Install-Module posh-git, Terminal-Icons, PSFzf, PSReadLine -Scope CurrentUser -Force -AllowClobber
 ```
 
-### 5. Prompt engine
+### 4. Oh My Posh Theme
 
-Pick a theme, they are all listed by:
+Create the themes folder and download your theme (e.g., `robbyrussell`):
 
 ```powershell
-Get-PoshThemes
+$themesDir = Join-Path $env:LOCALAPPDATA 'Programs\oh-my-posh\themes'
+New-Item -ItemType Directory -Path $themesDir -Force
+Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/robbyrussell.omp.json' -OutFile (Join-Path $themesDir 'robbyrussell.omp.json')
 ```
 
-Then point the managed block in your `$PROFILE` at it (default here is `robbyrussell`):
+### 5. Profile Configuration
 
-```powershell
-oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\robbyrussell.omp.json" | Invoke-Expression
-```
-
-The block lives between these markers in `$PROFILE`, so re-running `install.ps1`
-updates it without touching anything else you have added:
-
-```powershell
-# >>> powershell-setup:managed-block >>>
-# <<< powershell-setup:managed-block <<<
-```
-
-`user_profile.ps1` in this repository is the reference copy of that block.
+Add the managed block to your `$PROFILE` (`code $PROFILE` or `notepad $PROFILE`).
 
 ### 6. Reload
 
